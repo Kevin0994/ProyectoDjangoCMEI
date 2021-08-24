@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'colorfield',
+    'register',
 ]
 
 X_FRAME_OPTIONS='SAMEORIGIN'
@@ -106,6 +107,7 @@ DATABASES = {
 
 }
 
+DATABASE_ROUTERS = ['register.routers.RegisterRouter',]
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
