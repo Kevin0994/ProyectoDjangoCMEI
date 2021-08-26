@@ -52,9 +52,9 @@
                                 x[i].piso +
                                 "</td><td>" +
                                 x[i].dependencia +
-                                "</td><td> <input type='button' class='btn btn-warning btn-sm btn-edit' value='Edit' data-sid=" +
+                                "</td><td> <input type='button' class='btn btn-warning btn-sm btn-edit' value='Edit' data-did=" +
                                 x[i].id +
-                                "> <input type='button' class='btn btn-danger btn-sm btn-del' value='Delete' data-sid=" +
+                                "> <input type='button' class='btn btn-danger btn-sm btn-del' value='Delete' data-did=" +
                                 x[i].id +
                                 ">";
                         }
@@ -104,7 +104,7 @@
      $("tbody").on("click", ".btn-edit", function(){
         let id = $(this).attr("data-did");
         let csr = $("input[name=csrfmiddlewaretoken").val();
-        //console.log(id);
+        console.log(id);
         mydata = {did:id, csrfmiddlewaretoken: csr};
         $.ajax({
             url:"{% url 'edit' %}",
