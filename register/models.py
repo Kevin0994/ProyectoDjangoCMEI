@@ -2,9 +2,18 @@ from django.db import models
 
 # Create your models here.
 
+tipo_status=[
+    (1, 'Direccion'),
+    (2, 'Subdireccion'),
+    (3, 'Seccion')
+
+]
 
 class Departamento(models.Model):
-    tipo = models.CharField(max_length=50)
+    tipo = models.IntegerField(
+        null=False, blank=False,
+        choices=tipo_status
+    )
     nombre = models.CharField(max_length=150)
     piso = models.CharField(max_length=50)
     dependencia = models.IntegerField(blank=True, null=True)
@@ -12,7 +21,6 @@ class Departamento(models.Model):
     class Meta:
         managed = True
         db_table = 'departamento'
-
 
 class Equipo(models.Model):
     usuario = models.ForeignKey('Usuario', models.DO_NOTHING)

@@ -9,14 +9,14 @@
         let ps = $("#pisoid").val();
         let dp = $("#dependenciaid").val();
         let csr = $("input[name=csrfmiddlewaretoken]").val();
-        if(tp ==""){
+        if(nm ==""){
             $("#msga").text("Por favor ingrese un nombre");
             $("#msga").show();
-        }else if(nm == ""){
+        }else if(ps == ""){
             console.log("Please Enter Email")
             $("#msga").text("Por favor ingrese un Email");
             $("#msga").show();
-        }else if(ps == ""){
+        }else if(dp == ""){
             console.log("Please Enter Password")
             $("#msga").text("Por favor ingrese un Password");
             $("#msga").show();
