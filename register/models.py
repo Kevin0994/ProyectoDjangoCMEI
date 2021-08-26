@@ -10,7 +10,7 @@ class Departamento(models.Model):
     dependencia = models.IntegerField(blank=True, null=True)
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'departamento'
 
 

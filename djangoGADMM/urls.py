@@ -19,14 +19,18 @@ from django.urls.conf import include
 from django.contrib.auth import views as auth_views
 from django.conf.urls.static import static
 from django.conf import settings
-from register.views import home
+from register import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('register.urls')),
     path('accounts/', include('django.contrib.auth.urls'), name='login'),
     path('accounts/', include('django.contrib.auth.urls'), name='logout'),
-    path('home/', home, name='index')
+    path('home/', views.home, name='index'),
+    path('departamento/', views.departament, name='departamento'),
+    path('save/', views.save_data, name='save'),
+    path('delete/', views.delete_data, name='delete'),
+    path('edit/', views.edit_data, name='edit'),
 
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
 

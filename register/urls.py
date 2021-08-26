@@ -5,7 +5,6 @@ from django.urls.conf import include
 from django.contrib.auth import views as auth_views
 from django.conf.urls.static import static
 from django.conf import settings
-from register import views
 app_name = 'register'
 
 urlpatterns = [
