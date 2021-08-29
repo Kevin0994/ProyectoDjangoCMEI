@@ -29,7 +29,6 @@ def save_data(request):
             usr = Departamento(id=did, tipo=tipo,nombre=nombre,piso=piso,dependencia=dependencia)
         usr.save()
         dep = Departamento.objects.values()
-        #print(stud)
         depart_data = list(dep)
         return JsonResponse({'status': 'Save',
                              'depart_data': depart_data})

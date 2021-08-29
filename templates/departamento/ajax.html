@@ -19,16 +19,16 @@
         let csr = $("input[name=csrfmiddlewaretoken]").val();
         if(nm ==""){
             $("#msga").text("Por favor ingrese un nombre");
-            $("#msga").show();
+            $("#msga").show()
         }else if(ps == ""){
             $("#msga").text("Por favor ingrese un piso");
-            $("#msga").show();
+            $("#msga").show()
         }else if(dp == ""){
             $("#msga").text("Por favor ingrese una dependencia");
-            $("#msga").show();
+            $("#msga").show()
         }else if(tp == ""){
             $("#msga").text("Por favor seleccion una opcion");
-            $("#msga").show();
+            $("#msga").show()
         }else{
 
             mydata = {
@@ -39,17 +39,19 @@
                 dependencia: dp,
                 csrfmiddlewaretoken: csr
             };
-            console.log(mydata)
             $.ajax({
                 url: "{% url 'save' %}",
                 method: "POST",
                 data: mydata,
                 success:function (data){
                     x = data.depart_data;
-                    console.log(data);
                     if(data.status == "Save"){
-                        $("#msg").text("Formulario enviado con éxito");
-                        $("#msg").show();
+                        $('#msga').hide();
+                        $('#msg').text("Formulario guardado con exito");
+                        $('#msg').fadeIn();
+                        setTimeout(function() {
+                            $("#msg").fadeOut();
+                        },2000);
                         //console.log(x);
                         for(i=0; i < x.length; i++){
                             output +=
@@ -71,12 +73,14 @@
                         }
                         $("#tbody").html(output);
                         $("#depid").val('');
-                        $("form")[0].reset();
+                        $("#formDepa")[0].reset();
+
                     }else{
-                        $("#msg").text("No se pueden guardar los datos");
-                        $("#msg").show();
+                        $('#msg').hide();
+                        $("#msga").text("No se pueden guardar los datos");
+                        $("#msga").show();
                         $("#depid").val('');
-                        $("form")[0].reset();
+                        $("#formDepa")[0].reset();
                     }
                 },
             });
@@ -85,10 +89,8 @@
 
     //Borrado de datos
     $("tbody").on("click", ".btn-del", function(){
-        //console.log("Delete Button Clicked")
         let id = $(this).attr("data-did");
         let csr = $("input[name=csrfmiddlewaretoken]").val();
-        //console.log(id);
         mydata = {did:id, csrfmiddlewaretoken: csr};
         mythis = this;
         $.ajax({
@@ -114,7 +116,6 @@
      $("tbody").on("click", ".btn-edit", function(){
         let id = $(this).attr("data-did");
         let csr = $("input[name=csrfmiddlewaretoken").val();
-        console.log(id);
         mydata = {did:id, csrfmiddlewaretoken: csr};
         $.ajax({
             url:"{% url 'edit' %}",
