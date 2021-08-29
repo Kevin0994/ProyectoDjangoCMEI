@@ -18,36 +18,35 @@ def departament(request):
 @login_required
 def save_data(request):
     if request.method == "POST":
-        form = DepartamentRegistration(request.POST)
-        if form.is_valid():
-            did = request.POST['depid']
-            tipo = request.POST['tipo']
-            nombre = request.POST['nombre']
-            piso = request.POST['piso']
-            dependencia = request.POST['dependencia']
-            if(did==''):
-                usr = Departamento(tipo=tipo,nombre=nombre,piso=piso,dependencia=dependencia)
-            else:
-                usr = Departamento(id=did, tipo=tipo,nombre=nombre,piso=piso,dependencia=dependencia)
-            usr.save()
-            dep = Departamento.objects.values()
-            #print(stud)
-            depart_data = list(dep)
-            return JsonResponse({'status': 'Save',
-                                 'depart_data': depart_data})
-            print('salvado')
+        did = request.POST['depid']
+        tipo = request.POST['tipo']
+        nombre = request.POST['nombre']
+        piso = request.POST['piso']
+        dependencia = request.POST['dependencia']
+        if(did==''):
+            usr = Departamento(tipo=tipo,nombre=nombre,piso=piso,dependencia=dependencia)
         else:
-            return JsonResponse({'status': 0})
+            usr = Departamento(id=did, tipo=tipo,nombre=nombre,piso=piso,dependencia=dependencia)
+        usr.save()
+        dep = Departamento.objects.values()
+        #print(stud)
+        depart_data = list(dep)
+        return JsonResponse({'status': 'Save',
+                             'depart_data': depart_data})
+
 
 #Delete Data
 @login_required
 def delete_data(request):
-    if request.method == "POST":
-        id = request.POST.get('did')
-        pi = Departamento.objects.get(pk=id)
-        pi.delete()
-        return JsonResponse({'status': 1})
-    else:
+    try:
+        if request.method == "POST":
+            id = request.POST.get('did')
+            pi = Departamento.objects.get(pk=id)
+            pi.delete()
+            return JsonResponse({'status': 1})
+        else:
+            return JsonResponse({'status': 0})
+    except Exception as e:
         return JsonResponse({'status': 0})
 
 #Edit Data

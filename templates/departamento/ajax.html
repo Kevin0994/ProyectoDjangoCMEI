@@ -1,10 +1,18 @@
 <script>
     //Inserto de datos
+   // var tipo = "";
+   //   $(function(){
+   //      $('select[name="Tipo"]').on('change', function (){
+   //          var nm = $(this).children("option:selected").text();
+   //          tipo = nm;
+   //          return nm;
+   //      })
+   //  })
+
     $("#btnsave").click(function (){
-        //console.log("Save Button clicked")
         output = "";
         let did = $("#depid").val();
-        let tp = $("#tipoid").val();
+        let tp = $("#id_Tipo").children("option:selected").text();
         let nm = $("#nombreid").val();
         let ps = $("#pisoid").val();
         let dp = $("#dependenciaid").val();
@@ -13,14 +21,16 @@
             $("#msga").text("Por favor ingrese un nombre");
             $("#msga").show();
         }else if(ps == ""){
-            console.log("Please Enter Email")
-            $("#msga").text("Por favor ingrese un Email");
+            $("#msga").text("Por favor ingrese un piso");
             $("#msga").show();
         }else if(dp == ""){
-            console.log("Please Enter Password")
-            $("#msga").text("Por favor ingrese un Password");
+            $("#msga").text("Por favor ingrese una dependencia");
+            $("#msga").show();
+        }else if(tp == ""){
+            $("#msga").text("Por favor seleccion una opcion");
             $("#msga").show();
         }else{
+
             mydata = {
                 depid: did ,
                 tipo: tp,
@@ -29,14 +39,15 @@
                 dependencia: dp,
                 csrfmiddlewaretoken: csr
             };
+            console.log(mydata)
             $.ajax({
                 url: "{% url 'save' %}",
                 method: "POST",
                 data: mydata,
                 success:function (data){
-                    //console.log(data);
                     x = data.depart_data;
-                    if(data.status == "Save"){-
+                    console.log(data);
+                    if(data.status == "Save"){
                         $("#msg").text("Formulario enviado con éxito");
                         $("#msg").show();
                         //console.log(x);
@@ -61,8 +72,7 @@
                         $("#tbody").html(output);
                         $("#depid").val('');
                         $("form")[0].reset();
-                    }
-                    if(data.status == 0){
+                    }else{
                         $("#msg").text("No se pueden guardar los datos");
                         $("#msg").show();
                         $("#depid").val('');
@@ -93,8 +103,8 @@
                     $(mythis).closest("tr").fadeOut();
                 }
                  if(data.status == 0){
-                    $("#msg").text("No se pueden borrar los datos");
-                    $("#msg").show();
+                    $("#msga").text("No se pueden borrar los datos");
+                    $("#msga").show();
                 }
             },
         });
@@ -114,7 +124,7 @@
             success:function (data){
                 //console.log(data);
                 $("#depid").val(data.id);
-                $("#tipoid").val(data.tipo);
+                $('select[name=Tipo] option:first').html(data.tipo);
                 $("#nombreid").val(data.nombre);
                 $("#pisoid").val(data.piso);
                 $("#dependenciaid").val(data.dependencia);

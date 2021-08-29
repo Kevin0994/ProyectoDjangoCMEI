@@ -1,24 +1,27 @@
-from django import forms
-from .models import Departamento,Equipo
+from django.forms import *
+from .models import Departamento,Equipo, Tipo
 
-class DepartamentRegistration(forms.ModelForm):
+class DepartamentRegistration(ModelForm):
 
+    Tipo = ModelChoiceField(queryset=Tipo.objects.all(), empty_label="",to_field_name="nombre",widget=Select(attrs={
+        'class': 'form-control'
+    }))
     class Meta:
         model = Departamento
-        fields = ['tipo','nombre','piso','dependencia']
+        fields = ['nombre','piso','dependencia']
         widgets = {
-            'nombre': forms.TextInput(attrs={'class': 'form-control',
+            'nombre': TextInput(attrs={'class': 'form-control',
             'id': 'nombreid'}),
-            'piso': forms.TextInput(attrs={'class': 'form-control',
+            'piso': TextInput(attrs={'class': 'form-control',
             'id': 'pisoid'}),
-            'dependencia': forms.NumberInput(attrs={'class': 'form-control',
+            'dependencia': NumberInput(attrs={'class': 'form-control',
             'id': 'dependenciaid'}),
+
         }
 
-        def __init__(self, *args, **kwargs):
-            super().__init__(*args, **kwargs)
 
-            self.fields['tipo'].widget.attrs.update({
-                'class': 'form-control',
-                'id':'tipoid'
-            })
+
+#class SelectForm(Form):
+#    categories = ModelChoiceField(queryset= Tipo.objects.all(),widget=Select(attrs={
+#        'class': 'form-control'
+#s   }))
