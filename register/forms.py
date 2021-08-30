@@ -20,5 +20,4 @@ class DepartamentRegistration(forms.ModelForm):
 
             self.fields['tipo'].widget.attrs.update({
                 'class': 'form-control',
-                'id':'tipoid'
             })
