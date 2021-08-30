@@ -2,18 +2,16 @@ from django.db import models
 
 # Create your models here.
 
-tipo_status=[
-    (1, 'Direccion'),
-    (2, 'Subdireccion'),
-    (3, 'Seccion')
+class Tipo(models.Model):
+    nombre = models.CharField(max_length=70, null=True)
+    descripcion = models.CharField(max_length=100, null=True)
 
-]
+    def __str__(self):
+        return self.nombre
+
 
 class Departamento(models.Model):
-    tipo = models.IntegerField(
-        null=False, blank=False,
-        choices=tipo_status
-    )
+    tipo = models.CharField(null=False, blank=False,max_length=50)
     nombre = models.CharField(max_length=150)
     piso = models.CharField(max_length=50)
     dependencia = models.IntegerField(blank=True, null=True)
@@ -21,6 +19,9 @@ class Departamento(models.Model):
     class Meta:
         managed = True
         db_table = 'departamento'
+
+    def __str__(self):
+        return self.nombre
 
 class Equipo(models.Model):
     usuario = models.ForeignKey('Usuario', models.DO_NOTHING)
@@ -32,6 +33,7 @@ class Equipo(models.Model):
         db_table = 'equipo'
 
 
+
 class Usuario(models.Model):
     departamento = models.ForeignKey(Departamento, models.DO_NOTHING, db_column='departamento_id', blank=True, null=True)
     nombre = models.CharField(max_length=500)
@@ -41,3 +43,6 @@ class Usuario(models.Model):
     class Meta:
         managed = False
         db_table = 'usuario'
+
+    def __str__(self):
+        return self.nombre

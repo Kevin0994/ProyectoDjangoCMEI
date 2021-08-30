@@ -58,7 +58,7 @@
 
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#"
+                <a class="nav-link collapsed" href=""
                     aria-expanded="true" aria-controls="collapseTwo">
                     <i class="fas fa-fw fa-cog"></i>
                     <span>Departamentos</span>
@@ -67,7 +67,7 @@
 
             <!-- Nav Item - Utilities Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#"
+                <a class="nav-link collapsed" href=""
                     aria-expanded="true" aria-controls="collapseUtilities">
                     <i class="fas fa-fw fa-wrench"></i>
                     <span>Usuarios</span>
@@ -75,7 +75,7 @@
             </li>
 
              <li class="nav-item">
-                <a class="nav-link collapsed" href="#"
+                <a class="nav-link collapsed" href=""
                     aria-expanded="true" aria-controls="collapseUtilities">
                     <i class="fas fa-fw fa-wrench"></i>
                     <span>Equipos</span>
@@ -201,64 +201,64 @@
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-sm-4">
-                            <h4 class="text-center alert alert-info">Add/Update
-                                    Departamento</h4>
-                            <form method="POST">
-                                {% csrf_token %}
-                                <input type="hidden" name="depid" id="depid"/>
-                                {{ formDepa.as_p }}
 
-                            <input
-                                    type="button"
-                                    class="btn btn-outline-success"
-                                    id="btnsave"
-                                    value="Save"
-                            />
-                            </form>
-                            <h4></h4>
-                            <div id="msg" class="alert alert-success"
-                            style="display: none"></div>
-                            <div id="msga" class="alert alert-danger"
-                            style="display: none"></div>
-                        </div>
-                        <div class="col-sm-7">
-                            <h4 class="text-center alert alert-info">Informacion de los Departamentos</h4>
-                            <table class="table table-hover">
-                            <thead>
-                                <th scope="col">ID</th>
-                                <th scope="col">Tipo</th>
-                                <th scope="col">Nombre</th>
-                                <th scope="col">Piso</th>
-                                <th scope="col">Dependencia</th>
-                                <th scope="col">Accion</th>
-                            </thead>
-                            <tbody id="tbody">
-                            {% for dp in dep %}
-                            <tr>
-                                <td>{{ dp.id }}</td>
-                                <td>{{ dp.tipo }}</td>
-                                <td>{{ dp.nombre }}</td>
-                                <td>{{ dp.piso }}</td>
-                                <td>{{ dp.dependencia }}</td>
-                                <td>
-                                    <input type="button"
-                                           data-did="{{ dp.id }}"
-                                           class="btn btn-warning btn-sm btn-edit"
-                                           value="Edit"
-                                    />
-                                    <input type="button"
-                                           data-did="{{ dp.id }}"
-                                           class="btn btn-danger btn-sm btn-del"
-                                           value="Delete"
-                                    />
-                                </td>
-                            </tr>
-                            {% endfor %}
-                            </tbody>
-                            </table>
-                        </div>
+                    <div class="file-thumbnail">
+                        <h4 class="text-center alert alert-info">Add/Update
+                                Departamento</h4>
+                        <form method="POST" id="formDepa">
+                            {% csrf_token %}
+                            <input type="hidden" name="depid" id="depid"/>
+                            {{ formDepa.as_p }}
+
+
+                        <input
+                                type="button"
+                                class="btn btn-outline-success"
+                                id="btnsave"
+                                value="Save"
+                        />
+                        </form>
+                        <h4></h4>
+                        <div id="msg" class="alert alert-success"
+                        style="display: none"></div>
+                        <div id="msga" class="alert alert-danger"
+                        style="display: none"></div>
+                    </div>
+                    <div class="file-thumbnail">
+                        <h4 class="text-center alert alert-info">Informacion de los Departamentos</h4>
+                        <table class="table table-hover">
+                        <thead>
+                            <th scope="col">ID</th>
+                            <th scope="col">Tipo</th>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Piso</th>
+                            <th scope="col">Dependencia</th>
+                            <th scope="col">Accion</th>
+                        </thead>
+                        <tbody id="tbody">
+                        {% for dp in dep %}
+                        <tr>
+                            <td>{{ dp.id }}</td>
+                            <td>{{ dp.tipo }}</td>
+                            <td>{{ dp.nombre }}</td>
+                            <td>{{ dp.piso }}</td>
+                            <td>{{ dp.dependencia }}</td>
+                            <td>
+                                <input type="button"
+                                       data-did="{{ dp.id }}"
+                                       class="btn btn-warning btn-sm btn-edit"
+                                       value="Edit"
+                                />
+                                <input type="button"
+                                       data-did="{{ dp.id }}"
+                                       class="btn btn-danger btn-sm btn-del"
+                                       value="Delete"
+                                />
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                        </table>
                     </div>
 
 
