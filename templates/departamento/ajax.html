@@ -15,16 +15,13 @@
         let tp = $("#id_Tipo").children("option:selected").text();
         let nm = $("#nombreid").val();
         let ps = $("#pisoid").val();
-        let dp = $("#dependenciaid").val();
+        let dp = $("#id_Dependencia").children("option:selected").text();
         let csr = $("input[name=csrfmiddlewaretoken]").val();
         if(nm ==""){
             $("#msga").text("Por favor ingrese un nombre");
             $("#msga").show()
         }else if(ps == ""){
             $("#msga").text("Por favor ingrese un piso");
-            $("#msga").show()
-        }else if(dp == ""){
-            $("#msga").text("Por favor ingrese una dependencia");
             $("#msga").show()
         }else if(tp == ""){
             $("#msga").text("Por favor seleccion una opcion");
@@ -55,6 +52,7 @@
                         //console.log(x);
                         for(i=0; i < x.length; i++){
                             output +=
+
                                 "<tr><td>" +
                                 x[i].id +
                                 "</td><td>" +
@@ -72,6 +70,7 @@
                                 ">";
                         }
                         $("#tbody").html(output);
+                        $('#id_Dependencia').append('<option value="'+mydata.nombre+'">'+mydata.nombre+'</option>');
                         $("#depid").val('');
                         $("#formDepa")[0].reset();
 
@@ -90,8 +89,9 @@
     //Borrado de datos
     $("tbody").on("click", ".btn-del", function(){
         let id = $(this).attr("data-did");
+        let nm = $(this).attr("data-nm");
         let csr = $("input[name=csrfmiddlewaretoken]").val();
-        mydata = {did:id, csrfmiddlewaretoken: csr};
+        mydata = {did:id,no:nm ,csrfmiddlewaretoken: csr};
         mythis = this;
         $.ajax({
             url:"{% url 'delete' %}",
@@ -102,6 +102,8 @@
                 if(data.status == 1){
                     $("#msg").text("Datos borrados con éxito");
                     $("#msg").show();
+                    $("#id_Dependencia").find('option[value='+mydata.no+']').remove();
+                    console.log(mydata.no);
                     $(mythis).closest("tr").fadeOut();
                 }
                  if(data.status == 0){

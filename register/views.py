@@ -22,11 +22,17 @@ def save_data(request):
         tipo = request.POST['tipo']
         nombre = request.POST['nombre']
         piso = request.POST['piso']
-        dependencia = request.POST['dependencia']
-        if(did==''):
-            usr = Departamento(tipo=tipo,nombre=nombre,piso=piso,dependencia=dependencia)
+        nmdep = request.POST['dependencia']
+        dependencia = Departamento.objects.filter(nombre=nmdep)
+        if dependencia.exists():
+            depa=dependencia.first().id
         else:
-            usr = Departamento(id=did, tipo=tipo,nombre=nombre,piso=piso,dependencia=dependencia)
+            depa=0
+
+        if(did==''):
+            usr = Departamento(tipo=tipo,nombre=nombre,piso=piso,dependencia=depa)
+        else:
+            usr = Departamento(id=did, tipo=tipo,nombre=nombre,piso=piso,dependencia=depa)
         usr.save()
         dep = Departamento.objects.values()
         depart_data = list(dep)
