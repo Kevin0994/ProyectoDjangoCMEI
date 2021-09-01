@@ -59,6 +59,10 @@ def delete_data(request):
 def edit_data(request):
     if request.method == "POST":
         id = request.POST.get('did')
+        se = request.POST.get('de')
+        selnombre = Departamento.objects.filter(pk=se)
+        if selnombre.exists():
+            se = selnombre.first().nombre
         departament = Departamento.objects.get(pk=id)
-        depart_data = {"id": departament.id, "tipo": departament.tipo, "nombre": departament.nombre, "piso": departament.piso, "dependencia": departament.dependencia }
+        depart_data = {"id": departament.id, "tipo": departament.tipo, "nombre": departament.nombre, "piso": departament.piso, "dependencia": departament.dependencia, "selnombre":se }
         return JsonResponse(depart_data)

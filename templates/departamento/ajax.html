@@ -1,13 +1,7 @@
 <script>
-    //Inserto de datos
-   // var tipo = "";
-   //   $(function(){
-   //      $('select[name="Tipo"]').on('change', function (){
-   //          var nm = $(this).children("option:selected").text();
-   //          tipo = nm;
-   //          return nm;
-   //      })
-   //  })
+
+    var operacion='save';
+    var departamento='';
 
     $("#btnsave").click(function (){
         output = "";
@@ -44,12 +38,7 @@
                     x = data.depart_data;
                     if(data.status == "Save"){
                         $('#msga').hide();
-                        $('#msg').text("Formulario guardado con exito");
-                        $('#msg').fadeIn();
-                        setTimeout(function() {
-                            $("#msg").fadeOut();
-                        },2000);
-                        //console.log(x);
+                        $("#formDepa")[0].reset();
                         for(i=0; i < x.length; i++){
                             output +=
 
@@ -70,10 +59,22 @@
                                 ">";
                         }
                         $("#tbody").html(output);
-                        $('#id_Dependencia').append('<option value="'+mydata.nombre+'">'+mydata.nombre+'</option>');
+                        if(operacion=='save'){
+                            $('#id_Dependencia').append('<option value="'+mydata.nombre+'">'+mydata.nombre+'</option>');
+                            $('#msg').text("Formulario guardado con exito");
+                            $('#msg').fadeIn();
+                            setTimeout(function() {
+                                $("#msg").fadeOut();
+                            },2000);
+                        }else if(mydata.nombre != departamento){
+                            location.reload();
+                            $('#msg').text("Formulario actualizado con exito");
+                            $('#msg').fadeIn();
+                            setTimeout(function() {
+                                $("#msg").fadeOut();
+                            },2000);
+                        }
                         $("#depid").val('');
-                        $("#formDepa")[0].reset();
-
                     }else{
                         $('#msg').hide();
                         $("#msga").text("No se pueden guardar los datos");
@@ -88,25 +89,24 @@
 
     //Borrado de datos
     $("tbody").on("click", ".btn-del", function(){
+        var currentRow=$(this).closest("tr");
         let id = $(this).attr("data-did");
-        let nm = $(this).attr("data-nm");
+        let no = currentRow.find("td:eq(2)").text();
         let csr = $("input[name=csrfmiddlewaretoken]").val();
-        mydata = {did:id,no:nm ,csrfmiddlewaretoken: csr};
+        mydata = {did:id ,csrfmiddlewaretoken: csr};
         mythis = this;
         $.ajax({
             url:"{% url 'delete' %}",
             method: "POST",
             data: mydata,
             success:function (data){
-                //console.log(data);
+                console.log(no);
                 if(data.status == 1){
                     $("#msg").text("Datos borrados con éxito");
                     $("#msg").show();
-                    $("#id_Dependencia").find('option[value='+mydata.no+']').remove();
-                    console.log(mydata.no);
+                    location.reload();
                     $(mythis).closest("tr").fadeOut();
-                }
-                 if(data.status == 0){
+                }else{(data.status == 0)
                     $("#msga").text("No se pueden borrar los datos");
                     $("#msga").show();
                 }
@@ -115,22 +115,31 @@
     });
 
     //Editar Datos
-     $("tbody").on("click", ".btn-edit", function(){
+     $("tbody").on("click", ".btn-edit", function(){$("#formDepa")[0].reset();
         let id = $(this).attr("data-did");
+        var currentRow=$(this).closest("tr");
+        let ti = currentRow.find("td:eq(1)").text();
+        let no = currentRow.find("td:eq(2)").text();
+        let de = currentRow.find("td:eq(4)").text();
         let csr = $("input[name=csrfmiddlewaretoken").val();
-        mydata = {did:id, csrfmiddlewaretoken: csr};
+        mydata = {did:id, de:de ,csrfmiddlewaretoken: csr};
         $.ajax({
             url:"{% url 'edit' %}",
             method: "POST",
             data: mydata,
             dataType: "json",
             success:function (data){
-                //console.log(data);
                 $("#depid").val(data.id);
-                $('select[name=Tipo] option:first').html(data.tipo);
+                $("#id_Tipo").val(ti).change();
+                if(de=='0'){
+                    $("#id_Dependencia").val('').change();
+                }else{
+                    $("#id_Dependencia").val(data.selnombre).change();
+                }
                 $("#nombreid").val(data.nombre);
                 $("#pisoid").val(data.piso);
-                $("#dependenciaid").val(data.dependencia);
+                operacion = 'edit';
+                departamento = no;
             },
         });
     });
