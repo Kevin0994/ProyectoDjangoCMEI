@@ -58,7 +58,7 @@
 
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href=""
+                <a class="nav-link collapsed" href="{% url 'departamento'  %}"
                     aria-expanded="true" aria-controls="collapseTwo">
                     <i class="fas fa-fw fa-cog"></i>
                     <span>Departamentos</span>
@@ -204,11 +204,11 @@
 
                     <div class="file-thumbnail">
                         <h4 class="text-center alert alert-info">Ingresar/Actualizar
-                                Departamento</h4>
-                        <form method="POST" id="formDepa">
+                                Usuario</h4>
+                        <form method="POST" id="formUser">
                             {% csrf_token %}
-                            <input type="hidden" name="depid" id="depid"/>
-                            {{ formDepa.as_p }}
+                            <input type="hidden" name="usrid" id="usrid"/>
+                            {{ formUsr.as_p }}
 
 
                         <input
@@ -225,32 +225,31 @@
                         style="display: none"></div>
                     </div>
                     <div class="file-thumbnail">
-                        <h4 class="text-center alert alert-info">Informacion de los Departamentos</h4>
+                        <h4 class="text-center alert alert-info">Informacion de los Usuarios</h4>
                         <table class="table table-hover">
                         <thead>
                             <th scope="col">ID</th>
-                            <th scope="col">Tipo</th>
+                            <th scope="col">Departamento</th>
                             <th scope="col">Nombre</th>
-                            <th scope="col">Piso</th>
-                            <th scope="col">Dependencia</th>
-                            <th scope="col">Accion</th>
+                            <th scope="col">Apellidos</th>
+                            <th scope="col">correo</th>
                         </thead>
                         <tbody id="tbody">
-                        {% for dp in dep %}
+                        {% for usr in usrs %}
                         <tr>
-                            <td>{{ dp.id }}</td>
-                            <td>{{ dp.tipo }}</td>
-                            <td>{{ dp.nombre }}</td>
-                            <td>{{ dp.piso }}</td>
-                            <td>{{ dp.dependencia }}</td>
+                            <td>{{ usr.id }}</td>
+                            <td>{{ usr.departamento_id }}</td>
+                            <td>{{ usr.nombre }}</td>
+                            <td>{{ usr.apellidos }}</td>
+                            <td>{{ usr.correo }}</td>
                             <td>
                                 <input type="button"
-                                       data-did="{{ dp.id }}"
+                                       data-uid="{{ usr.id }}"
                                        class="btn btn-warning btn-sm btn-edit"
                                        value="Edit"
                                 />
                                 <input type="button"
-                                       data-did="{{ dp.id }}"
+                                       data-uid="{{ usr.id }}"
                                        class="btn btn-danger btn-sm btn-del"
                                        value="Delete"
                                 />
@@ -314,7 +313,7 @@
     <script src="{% static 'js/bootstrap.js'%}"></script>
     <script src="{% static 'js/popper.js'%}"></script>
 
-    {% include "departamento/ajax.html" %}
+    {% include "register/ajaxUsr.html" %}
 
 </body>
 

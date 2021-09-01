@@ -28,9 +28,14 @@ urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls'), name='logout'),
     path('home/', views.home, name='index'),
     path('departamento/', views.departament, name='departamento'),
-    path('save/', views.save_data, name='save'),
-    path('delete/', views.delete_data, name='delete'),
-    path('edit/', views.edit_data, name='edit'),
+    path('departamento/save/', views.save_data_departament, name='savedepartamento'),
+    path('departamento/delete/', views.delete_data_departament, name='deletedepartamento'),
+    path('departamento/edit/', views.edit_data_departament, name='editdepartamento'),
+    path('usuario/', views.users, name='usuario'),
+    path('usuario/save/', views.save_data_users, name='saveusuario'),
+    path('usuario/delete/', views.delete_data_users, name='deleteusuario'),
+    path('usuario/edit/', views.edit_data_users, name='editusuario'),
+
 
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
 

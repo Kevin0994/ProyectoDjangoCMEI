@@ -1,0 +1,125 @@
+<script>
+
+
+    $("#btnsave").click(function (){
+        output = "";
+        let uid = $("#usrid").val();
+        let nm = $("#nombreid").val();
+        let ap = $("#apellidosid").val();
+        let co = $("#correoid").val();
+        let de = $("#id_Departamento").children("option:selected").val();
+        let csr = $("input[name=csrfmiddlewaretoken]").val();
+        if(nm ==""){
+            $("#msga").text("Por favor ingrese un nombre");
+            $("#msga").show()
+        }else if(ap == ""){
+            $("#msga").text("Por favor ingrese un piso");
+            $("#msga").show()
+        }else if(co == ""){
+            $("#msga").text("Por favor seleccion una opcion");
+            $("#msga").show()
+        }else if(de == ""){
+            $("#msga").text("Por favor seleccion una opcion");
+            $("#msga").show()
+        }
+
+            mydata = {
+                usrid: uid ,
+                nombre: nm,
+                apellidos:ap,
+                correo: co,
+                departamento: de,
+                csrfmiddlewaretoken: csr
+            };
+            $.ajax({
+                url: "{% url 'saveusuario' %}",
+                method: "POST",
+                data: mydata,
+                success:function (data){
+                    x = data.user_data;
+                    if(data.status == "Save"){
+                        $('#msga').hide();
+                        $("#formUser")[0].reset();
+                        for(i=0; i < x.length; i++){
+                            output +=
+
+                                "<tr><td>" +
+                                x[i].id +
+                                "</td><td>" +
+                                x[i].departamento_id +
+                                "</td><td>" +
+                                x[i].nombre +
+                                "</td><td>" +
+                                x[i].apellidos +
+                                "</td><td>" +
+                                x[i].correo +
+                                "</td><td> <input type='button' class='btn btn-warning btn-sm btn-edit' value='Edit' data-uid=" +
+                                x[i].id +
+                                "> <input type='button' class='btn btn-danger btn-sm btn-del' value='Delete' data-uid=" +
+                                x[i].id +
+                                ">";
+                        }
+                        $("#tbody").html(output);
+                        $('#msg').text("Formulario guardado con exito");
+                        $('#msg').fadeIn();
+                        setTimeout(function() {
+                            $("#msg").fadeOut();
+                        },2000);
+                        $("#usrid").val('');
+                    }else{
+                        $('#msg').hide();
+                        $("#msga").text("No se pueden guardar los datos");
+                        $("#msga").show();
+                        $("#usrid").val('');
+                        $("#formUser")[0].reset();
+                    }
+                },
+            });
+    });
+
+    //Borrado de datos
+    $("tbody").on("click", ".btn-del", function(){
+        let id = $(this).attr("data-uid");
+        let csr = $("input[name=csrfmiddlewaretoken]").val();
+        mydata = {uid:id ,csrfmiddlewaretoken: csr};
+        mythis = this;
+        $.ajax({
+            url:"{% url 'deleteusuario' %}",
+            method: "POST",
+            data: mydata,
+            success:function (data){
+                if(data.status == 1){
+                    $("#msg").text("Datos borrados con éxito");
+                    $("#msg").show();
+                    $(mythis).closest("tr").fadeOut();
+                }else{(data.status == 0)
+                    $("#msga").text("No se pueden borrar los datos");
+                    $("#msga").show();
+                }
+            },
+        });
+    });
+
+    //Editar Datos
+     $("tbody").on("click", ".btn-edit", function(){$("#formUser")[0].reset();
+        let id = $(this).attr("data-uid");
+        let csr = $("input[name=csrfmiddlewaretoken").val();
+        mydata = {uid:id,csrfmiddlewaretoken: csr};
+        $.ajax({
+            url:"{% url 'editusuario' %}",
+            method: "POST",
+            data: mydata,
+            dataType: "json",
+            success:function (data){
+                $("#usrid").val(data.id);
+                $("#id_Departamento").val(data.departamento).change();
+                $("#nombreid").val(data.nombre);
+                $("#apellidosid").val(data.apellidos);
+                $("#correoid").val(data.correo);
+            },
+        });
+    });
+</script>
+
+
+

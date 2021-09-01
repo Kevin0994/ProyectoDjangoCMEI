@@ -1,5 +1,5 @@
 from django.forms import *
-from .models import Departamento,Equipo, Tipo
+from .models import Departamento,Equipo, Tipo,Usuario
 
 class DepartamentRegistration(ModelForm):
 
@@ -20,8 +20,19 @@ class DepartamentRegistration(ModelForm):
         }
 
 
+class UserRegistration(ModelForm):
 
-#class SelectForm(Form):
-#    categories = ModelChoiceField(queryset= Tipo.objects.all(),widget=Select(attrs={
-#        'class': 'form-control'
-#s   }))
+    Departamento = ModelChoiceField(queryset=Departamento.objects.all(), empty_label="", to_field_name="nombre", widget=Select(attrs={
+        'class': 'form-control'
+    }))
+    class Meta:
+        model = Usuario
+        fields = ['nombre','apellidos','correo',]
+        widgets = {
+            'nombre': TextInput(attrs={'class': 'form-control',
+            'id': 'nombreid'}),
+            'apellidos': TextInput(attrs={'class': 'form-control',
+            'id': 'apellidosid'}),
+            'correo': TextInput(attrs={'class': 'form-control',
+            'id': 'correoid'}),
+        }
