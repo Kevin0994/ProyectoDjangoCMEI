@@ -204,11 +204,11 @@
 
                     <div class="file-thumbnail">
                         <h4 class="text-center alert alert-info">Ingresar/Actualizar
-                                Departamento</h4>
-                        <form method="POST" id="formDepa">
+                                Equipo</h4>
+                        <form method="POST" id="formEqu">
                             {% csrf_token %}
-                            <input type="hidden" name="depid" id="depid"/>
-                            {{ formDepa.as_p }}
+                            <input type="hidden" name="eqid" id="eqid"/>
+                            {{ formEqu.as_p }}
 
 
                         <input
@@ -225,32 +225,30 @@
                         style="display: none"></div>
                     </div>
                     <div class="file-thumbnail">
-                        <h4 class="text-center alert alert-info">Informacion de los Departamentos</h4>
+                        <h4 class="text-center alert alert-info">Informacion de los Equipo</h4>
                         <table class="table table-hover">
                         <thead>
                             <th scope="col">ID</th>
-                            <th scope="col">Tipo</th>
-                            <th scope="col">Nombre</th>
-                            <th scope="col">Piso</th>
-                            <th scope="col">Dependencia</th>
+                            <th scope="col">Usuario</th>
+                            <th scope="col">Cod_cmei</th>
+                            <th scope="col">Enlace</th>
                             <th scope="col">Accion</th>
                         </thead>
                         <tbody id="tbody">
-                        {% for dp in dep %}
+                        {% for eq in equ %}
                         <tr>
-                            <td>{{ dp.id }}</td>
-                            <td>{{ dp.tipo }}</td>
-                            <td>{{ dp.nombre }}</td>
-                            <td>{{ dp.piso }}</td>
-                            <td>{{ dp.dependencia }}</td>
+                            <td>{{ eq.id }}</td>
+                            <td>{{ eq.usuario_id }}</td>
+                            <td>{{ eq.cod_cmei }}</td>
+                            <td>{{ eq.enlace }}</td>
                             <td>
                                 <input type="button"
-                                       data-did="{{ dp.id }}"
+                                       data-eid="{{ eq.id }}"
                                        class="btn btn-warning btn-sm btn-edit"
                                        value="Edit"
                                 />
                                 <input type="button"
-                                       data-did="{{ dp.id }}"
+                                       data-eid="{{ eq.id }}"
                                        class="btn btn-danger btn-sm btn-del"
                                        value="Delete"
                                 />
@@ -314,7 +312,7 @@
     <script src="{% static 'js/bootstrap.js'%}"></script>
     <script src="{% static 'js/popper.js'%}"></script>
 
-    {% include "register/ajaxdepa.html" %}
+    {% include "register/ajaxEq.html" %}
 
 </body>
 

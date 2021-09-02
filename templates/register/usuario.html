@@ -67,7 +67,7 @@
 
             <!-- Nav Item - Utilities Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href=""
+                <a class="nav-link collapsed" href="{% url 'usuario'  %}"
                     aria-expanded="true" aria-controls="collapseUtilities">
                     <i class="fas fa-fw fa-wrench"></i>
                     <span>Usuarios</span>
@@ -75,7 +75,7 @@
             </li>
 
              <li class="nav-item">
-                <a class="nav-link collapsed" href=""
+                <a class="nav-link collapsed" href="{% url 'equipo'  %}"
                     aria-expanded="true" aria-controls="collapseUtilities">
                     <i class="fas fa-fw fa-wrench"></i>
                     <span>Equipos</span>
@@ -233,6 +233,7 @@
                             <th scope="col">Nombre</th>
                             <th scope="col">Apellidos</th>
                             <th scope="col">correo</th>
+                            <th scope="col">Accion</th>
                         </thead>
                         <tbody id="tbody">
                         {% for usr in usrs %}

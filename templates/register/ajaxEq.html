@@ -1,0 +1,117 @@
+<script>
+
+
+    $("#btnsave").click(function (){
+        output = "";
+        let eid = $("#eqid").val();
+        let cod = $("#cod_cmeid").val();
+        let en = $("#enlaceid").val();
+        let us = $("#id_Usuario").children("option:selected").val();
+        let csr = $("input[name=csrfmiddlewaretoken]").val();
+        if(cod ==""){
+            $("#msga").text("Por favor ingrese un codigo CMEI");
+            $("#msga").show()
+        }else if(en == ""){
+            $("#msga").text("Por favor ingrese un enlace");
+            $("#msga").show()
+        }else if(us == ""){
+            $("#msga").text("Por favor seleccion una opcion");
+            $("#msga").show()
+        }
+
+            mydata = {
+                qeuid: eid ,
+                cod_cmei: cod,
+                enlace:en,
+                usuario:us,
+                csrfmiddlewaretoken: csr
+            };
+            $.ajax({
+                url: "{% url 'savequipo' %}",
+                method: "POST",
+                data: mydata,
+                success:function (data){
+                    x = data.user_data;
+                    if(data.status == "Save"){
+                        $('#msga').hide();
+                        $("#formEqu")[0].reset();
+                        for(i=0; i < x.length; i++){
+                            output +=
+
+                                "<tr><td>" +
+                                x[i].id +
+                                "</td><td>" +
+                                x[i].usuario_id +
+                                "</td><td>" +
+                                x[i].cod_cmei +
+                                "</td><td>" +
+                                x[i].enlace +
+                                "</td><td> <input type='button' class='btn btn-warning btn-sm btn-edit' value='Edit' data-eid=" +
+                                x[i].id +
+                                "> <input type='button' class='btn btn-danger btn-sm btn-del' value='Delete' data-eid=" +
+                                x[i].id +
+                                ">";
+                        }
+                        $("#tbody").html(output);
+                        $('#msg').text("Formulario guardado con exito");
+                        $('#msg').fadeIn();
+                        setTimeout(function() {
+                            $("#msg").fadeOut();
+                        },2000);
+                        $("#eqid").val('');
+                    }else{
+                        $('#msg').hide();
+                        $("#msga").text("No se pueden guardar los datos");
+                        $("#msga").show();
+                        $("#eqid").val('');
+                        $("#formEqu")[0].reset();
+                    }
+                },
+            });
+    });
+
+    //Borrado de datos
+    $("tbody").on("click", ".btn-del", function(){
+        let id = $(this).attr("data-eid");
+        let csr = $("input[name=csrfmiddlewaretoken]").val();
+        mydata = {eid:id ,csrfmiddlewaretoken: csr};
+        mythis = this;
+        $.ajax({
+            url:"{% url 'deletequipo' %}",
+            method: "POST",
+            data: mydata,
+            success:function (data){
+                if(data.status == 1){
+                    $("#msg").text("Datos borrados con éxito");
+                    $("#msg").show();
+                    $(mythis).closest("tr").fadeOut();
+                }else{(data.status == 0)
+                    $("#msga").text("No se pueden borrar los datos");
+                    $("#msga").show();
+                }
+            },
+        });
+    });
+
+    //Editar Datos
+     $("tbody").on("click", ".btn-edit", function(){$("#formEqu")[0].reset();
+        let id = $(this).attr("data-eid");
+        let csr = $("input[name=csrfmiddlewaretoken").val();
+        mydata = {eid:id,csrfmiddlewaretoken: csr};
+        $.ajax({
+            url:"{% url 'editequipo' %}",
+            method: "POST",
+            data: mydata,
+            dataType: "json",
+            success:function (data){
+                $("#eqid").val(data.id);
+                $("#id_Usuario").val(data.usuario).change();
+                $("#cod_cmeid").val(data.cod_cmei);
+                $("#enlaceid").val(data.enlace);
+            },
+        });
+    });
+</script>
+
+
+

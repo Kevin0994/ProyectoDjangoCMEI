@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from .forms import DepartamentRegistration, UserRegistration
-from .models import Departamento, Usuario
+from .forms import DepartamentRegistration, UserRegistration, EquipoRegistration
+from .models import Departamento, Usuario, Equipo
 from django.http import JsonResponse
 # Create your views here.
 
@@ -112,3 +112,43 @@ def edit_data_users(request):
         depart_name = usuario.departamento.nombre
         usuario_data = {"id": usuario.id, "departamento": depart_name, "nombre": usuario.nombre, "apellidos": usuario.apellidos, "correo": usuario.correo }
         return JsonResponse(usuario_data)
+
+@login_required
+def equipo(request):
+    form = EquipoRegistration()
+    equ = Equipo.objects.all()
+    return render(request, 'register/equipo.html', {'formEqu': form, 'equ': equ})
+
+def save_data_equipo(request):
+    if request.method == "POST":
+        eid = request.POST['qeuid']
+        cod_cmei = request.POST['cod_cmei']
+        enlace = request.POST['enlace']
+        usuario_id = request.POST['usuario']
+        if(eid==''):
+            eqp = Equipo(usuario_id=usuario_id, cod_cmei=cod_cmei, enlace=enlace)
+        else:
+            eqp = Equipo(id=eid, usuario_id=usuario_id, cod_cmei=cod_cmei, enlace=enlace)
+        eqp.save()
+        equipo = Equipo.objects.values()
+        equipo_data = list(equipo)
+        return JsonResponse({'status': 'Save',
+                             'user_data': equipo_data})
+
+#Delete Data
+def delete_data_equipo(request):
+    if request.method == "POST":
+        id = request.POST.get('eid')
+        pi = Equipo.objects.get(pk=id)
+        pi.delete()
+        return JsonResponse({'status': 1})
+    else:
+        return JsonResponse({'status': 0})
+
+#Edit Data
+def edit_data_equipo(request):
+    if request.method == "POST":
+        id = request.POST.get('eid')
+        equipo = Equipo.objects.get(pk=id)
+        equipo_data = {"id": equipo.id, "usuario": equipo.usuario.id, "cod_cmei": equipo.cod_cmei, "enlace": equipo.enlace }
+        return JsonResponse(equipo_data)

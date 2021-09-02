@@ -35,7 +35,9 @@ urlpatterns = [
     path('usuario/save/', views.save_data_users, name='saveusuario'),
     path('usuario/delete/', views.delete_data_users, name='deleteusuario'),
     path('usuario/edit/', views.edit_data_users, name='editusuario'),
-
-
+    path('equipo/', views.equipo, name='equipo'),
+    path('equipo/save/', views.save_data_equipo, name='savequipo'),
+    path('equipo/delete/', views.delete_data_equipo, name='deletequipo'),
+    path('equipo/edit/', views.edit_data_equipo, name='editequipo'),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
 
