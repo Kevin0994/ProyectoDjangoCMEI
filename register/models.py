@@ -35,7 +35,7 @@ class Equipo(models.Model):
 
 
 class Usuario(models.Model):
-    departamento = models.ForeignKey(Departamento, models.DO_NOTHING, db_column='departamento_id', blank=True, null=True)
+    departamento = models.ForeignKey(Departamento, db_column='departamento_id', blank=True, null=True,on_delete=models.CASCADE,)
     nombre = models.CharField(max_length=500)
     apellidos = models.CharField(max_length=500)
     correo = models.CharField(max_length=500)

@@ -1,5 +1,18 @@
 from django.contrib import admin
+from django.contrib.auth.models import Permission
 from register.models import Usuario, Departamento, Equipo
+
+
+@admin.register(Permission)
+class ProfileAdmin(admin.ModelAdmin):
+    """Profile admin."""
+
+    list_display = ('id', 'name', 'codename')
+
+    search_fields = (
+        'name',
+        'codename',
+    )
 
 
 @admin.register(Usuario)
