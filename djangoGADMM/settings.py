@@ -42,12 +42,13 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+
     # Paquetes del proyecto
     'colorfield',
     'crispy_forms',
 
     # Mis aplicaciones
-    'register',
+    'register','login'
 ]
 
 X_FRAME_OPTIONS='SAMEORIGIN'
@@ -96,7 +97,7 @@ DATABASES = {
             },
         'NAME': 'djangoPrueba',
         'USER': 'postgres',
-        'PASSWORD': 'root',
+        'PASSWORD': 'guidoandres',
         'HOST': 'localhost',
         'PORT': '5432',
     },
@@ -107,7 +108,7 @@ DATABASES = {
             },
         'NAME': 'djangoPrueba',
         'USER': 'postgres',
-        'PASSWORD': 'root',
+        'PASSWORD': 'guidoandres',
         'HOST': 'localhost',
         'PORT': '5432',
     }

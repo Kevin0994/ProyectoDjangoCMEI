@@ -20,6 +20,7 @@ from django.contrib.auth import views as auth_views
 from django.conf.urls.static import static
 from django.conf import settings
 from register import views
+from login import views as hola
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -27,18 +28,7 @@ urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls'), name='login'),
     path('accounts/', include('django.contrib.auth.urls'), name='logout'),
     path('home/', views.home, name='index'),
-    path('denied/', views.permisos_Error, name='denied'),
-    path('departamento/', views.IniciarDepartamentos.as_view(), name='departamento'),
-    path('departamento/save/', views.SaveDepartament.as_view(), name='savedepartamento'),
-    path('departamento/delete/', views.DeleteDepartament.as_view(), name='deletedepartamento'),
-    path('departamento/edit/', views.EditDepartament.as_view(), name='editdepartamento'),
-    path('usuario/', views.IniciarUsuarios.as_view(), name='usuario'),
-    path('usuario/save/', views.SaveUser.as_view(), name='saveusuario'),
-    path('usuario/delete/', views.DeleteUser.as_view(), name='deleteusuario'),
-    path('usuario/edit/', views.EditUsuario.as_view(), name='editusuario'),
-    path('equipo/', views.IniciarEquipos.as_view(), name='equipo'),
-    path('equipo/save/', views.SaveEquipo.as_view(), name='savequipo'),
-    path('equipo/delete/', views.DeleteEquipo.as_view(), name='deletequipo'),
-    path('equipo/edit/', views.EditEquipo.as_view(), name='editequipo'),
+    path('signup',hola.registro_usuario,name='registro_usuario'),
+    path('signup1',hola.registro_adminiistrador,name='registro_adminiistrador'),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
 
