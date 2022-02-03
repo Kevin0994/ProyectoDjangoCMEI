@@ -97,7 +97,7 @@ DATABASES = {
             },
         'NAME': 'djangoPrueba',
         'USER': 'postgres',
-        'PASSWORD': 'guidoandres',
+        'PASSWORD': 'root',
         'HOST': 'localhost',
         'PORT': '5432',
     },
@@ -108,7 +108,7 @@ DATABASES = {
             },
         'NAME': 'djangoPrueba',
         'USER': 'postgres',
-        'PASSWORD': 'guidoandres',
+        'PASSWORD': 'root',
         'HOST': 'localhost',
         'PORT': '5432',
     }
